@@ -1,0 +1,12 @@
+<h2>Conference "{{conference.name}}"</h2>
+<p>List of sponsors</p>
+
+{% if sponsor_list %}
+    <ul>
+    {% for sponsor in sponsor_list %}
+        <li>{{ sponsor.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No sponsors are available.</p>
+{% endif %}

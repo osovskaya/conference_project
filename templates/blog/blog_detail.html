@@ -1,0 +1,11 @@
+{% if post %}
+
+    <h3>{{ post.topic }}</h3>
+    <p>Author: {{ post.author }}</p>
+    <p>Created: {{ post.created }}</p>
+    <br>
+    <p>{{ post.content }}</p>
+
+{% else %}
+    <p>Post is not available.</p>
+{% endif %}

@@ -1,0 +1,10 @@
+{% if blog_list %}
+    {% for post in blog_list %}
+        <h3><a href="{% url 'blog:blog_detail' pk=post.id %}">{{ post.topic }}</a></h3>
+        <p>Author: {{ post.author }}</p>
+        <p>Created: {{ post.created }}</p>
+        <br>
+    {% endfor %}
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}

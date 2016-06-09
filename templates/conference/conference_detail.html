@@ -1,0 +1,27 @@
+<h2>Conference details</h2>
+<br>
+
+{% if conference %}
+
+<h2>{{ conference.name }}</h2>
+<br>
+<p>Starts at: {{ conference.start_date }}</p>
+<p>Ends at: {{ conference.end_date }}</p>
+<p><a href="{% url 'conference:sponsor_list' pk=conference.id%}">Sponsors</a></p>
+<p><a href="{% url 'conference:speaker_list' pk=conference.id%}">Speakers</a></p>
+<br>
+<p>{{ conference.description }}</p>
+{% else %}
+    <p>Conference is not available</p>
+{% endif %}
+
+<br>
+<h2>Comments</h2>
+{% if message_list %}
+    {% for message in message_list %}
+        <p>{{ message.sender }}</p>
+        <p>{{ message.content }}</p>
+    {% endfor %}
+{% else %}
+    <p>No comments to this conference.</p>
+{% endif %}
