@@ -1,9 +1,16 @@
-<h1>Login page</h1>
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
 
-<form action="{% url 'conference:login_page' %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="log in" />
-</form>
+    <h1>Login page</h1>
+
+    <form action="{% url 'conference:login_page' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="log in" />
+    </form>
+
+    <p><a href="{% url 'conference:registration' %}">register</a></p>
+
+{% endblock %}

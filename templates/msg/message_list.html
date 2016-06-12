@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+
+    <h2> My messages </h2>
+
+    {% verbatim %}
+        <div ng-controller="MyUserCtrl">
+            <p ng-repeat="item in messages">{{ item.content }}</p>
+        </div>
+    {% endverbatim %}
+
+    <form action="{% url 'chat:message_list' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="send" />
+    </form>
+
+    <ul id="notifications">
+        {% for notification in object_list %}
+        <li>{{ notification.content }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

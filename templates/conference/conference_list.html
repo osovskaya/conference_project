@@ -1,15 +1,30 @@
-<h2> Current conferences </h2>
-<br>
+{% extends "base.html" %}
+{% block title %}Current conferences{% endblock %}
 
-{% if conference_list %}
-
-{% for conference in conference_list %}
-    <h3><a href="{% url 'conference:conference_detail' pk=conference.id %}">{{ conference.name }}</a></h3>
-    <p>Starts at: {{ conference.start_date }}</p>
-    <p>Ends at: {{ conference.end_date }}</p>
+{% block content %}
+    <h2> Current conferences </h2>
     <br>
-{% endfor %}
 
-{% else %}
-    <p>No conferences are available.</p>
-{% endif %}
+    {% if conference_list %}
+
+    {% for conference in conference_list %}
+        <h3><a href="{% url 'conference:conference_detail' pk=conference.id %}">{{ conference.name }}</a></h3>
+        <p>Starts at: {{ conference.start_date }}</p>
+        <p>Ends at: {{ conference.end_date }}</p>
+        <br>
+    {% endfor %}
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+
+    {% else %}
+        <p>No conferences are available.</p>
+    {% endif %}
+{% endblock %}

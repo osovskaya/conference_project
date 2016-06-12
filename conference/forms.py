@@ -2,7 +2,7 @@ from django import forms
 from django.forms import Form, ModelForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from conference.models import MyUser, Message
+from conference.models import MyUser
 
 
 class UserCreationForm(ModelForm):
@@ -34,7 +34,7 @@ class UserChangeForm(ModelForm):
     class Meta:
         model = MyUser
         fields = ('username', 'password', 'name', 'image',
-                  'company', 'conference', 'is_active', 'is_admin')
+                  'representative', 'conference', 'is_active', 'is_admin')
 
     def clean_password(self):
         return self.initial["password"]
@@ -42,55 +42,3 @@ class UserChangeForm(ModelForm):
 class LoginForm(Form):
     username = forms.EmailField(max_length=50, label='Email')
     password = forms.CharField(max_length=50, widget=forms.PasswordInput(), label='Password')
-
-
-class CompanyUpdateForm(ModelForm):
-    class Meta:
-        model = MyUser
-        fields = ('username', 'name', 'image', 'conference', 'company')
-        labels = {
-            'username': 'Email',
-            'name': 'Name',
-            'image': 'Photo',
-            'conference': 'Conferences'
-        }
-
-class MessageCreateForm(ModelForm):
-    class Meta:
-        model = Message
-        fields = ('sender', 'recipient', 'conference', 'content')
-        labels = {
-            'sender': 'From ',
-            'recipient': 'To ',
-            'conference': 'Conference',
-            'content': 'Message'
-        }
-
-
-
-'''class RegistrationForm(ModelForm):
-    class Meta:
-        model = MyUser
-        fields = ('username', 'password', 'name', 'image')
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-        labels = {
-            'username': 'Email',
-            'password': 'Password',
-            'name': 'Name',
-            'image': 'Photo'
-        }
-
-
-class UserUpdateForm(ModelForm):
-    class Meta:
-        model = MyUser
-        fields = ('username', 'name', 'image', 'conference')
-        labels = {
-            'username': 'Email',
-            'name': 'Name',
-            'image': 'Photo',
-            'conference': 'Conferences'
-        }
-'''

@@ -1,46 +1,36 @@
-<h1>My profile</h1>
+{% extends "base.html" %}
+{% block title %}User profile{% endblock %}
 
-{% if group.name = 'listener' %}
-    <p><b><a href="{% url 'conference:user_update' pk=user.id %}">update</a></b></p>
-{% elif group.name = 'company' %}
-    <p><b><a href="{% url 'conference:company_update' pk=user.id %}">update</a></b></p>
-{% endif %}
+{% block content %}
+    <h1>My profile</h1>
+    {% if group.name = 'listener' %}
+        <p><b><a href="{% url 'conference:user_update' pk=user.id %}">update</a></b></p>
+    {% elif group.name = 'company' or group.name = 'admin' %}
+        <p>
+        <b>
+            <a href="{% url 'conference:user_update' pk=user.id %}">update</a>
+            <a href="{% url 'conference:chose_speaker' pk=user.id %}">chose speaker</a>
+            <a href="{% url 'conference:chose_representative' pk=user.id %}">chose representative</a>
+        </b>
+    </p>
+    {% endif %}
 
-<p>{{ user.username }}</p>
-<p>{{ user.name }}</p>
-<p>{{ user.image }}</p>
-<p>{{ user.company }}</p>
-<p>{{ group.name }}</p>
+    <p>{{ user.username }}</p>
+    <p>{{ user.name }}</p>
+    <p><img src="{{ user.image.url }}"></p>
+    <p>{{ user.representative }}</p>
+    <p>{{ group.name }}</p>
 
-<h2>My conferences</h2>
-{% if conference_list %}
-    {% for conference in conference_list %}
-        <ul>
-            <li><p><b>{{ conference.name }}</b>, starts at: {{ conference.start_date }}</p></li>
-        </ul>
-    {% endfor %}
-{% else %}
-    <p>No conferences are available.</p>
-{% endif %}
+    <h2>My conferences</h2>
 
-<h2>My chat</h2>
+    {% if conference_list %}
+        {% for conference in conference_list %}
+            <ul>
+                <li><p><b>{{ conference.name }}</b>, starts at: {{ conference.start_date }}</p></li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No conferences are available.</p>
+    {% endif %}
+{% endblock %}
 
-<form action="{% url 'conference:user_detail' %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="send" />
-</form>
-
-{% if message_list %}
-    {% for message in message_list %}
-        <ul>
-            <li><p><b>From {{ message.sender.name }} to {{ message.recipient.name }}</b></p>
-                <p>{{ message.created }}</p>
-                <p>Conference: {{ message.conference }}</p>
-                <p>{{ message.content }}</p>
-            </li>
-        </ul>
-    {% endfor %}
-{% else %}
-    <p>No messages are available.</p>
-{% endif %}

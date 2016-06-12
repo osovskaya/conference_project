@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-
+from swampdragon.models import SelfPublishModel
+from msg.serializers import MyUserSerializer
 
 class Conference(models.Model):
     name = models.CharField(max_length=50)
@@ -40,26 +41,21 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class MyUser(AbstractBaseUser, PermissionsMixin):
+class MyUser(SelfPublishModel, AbstractBaseUser, PermissionsMixin):
+    serializer_class = MyUserSerializer
     username = models.EmailField(max_length=50, unique=True,)
     name = models.CharField(max_length=50)
-    image = models.CharField(max_length=50, blank=True)
+    image = models.ImageField(upload_to='images')
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     conference = models.ManyToManyField(Conference)
-    company = models.ForeignKey('self', null=True, blank=True)
+    representative = models.ForeignKey('self', null=True, blank=True)
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['name', ]
-
-    class Meta():
-        permissions = (
-            ('view_sponsors', 'Can view sponsors list'),
-            ('add_representative', 'Can add representative'),
-        )
 
     def get_full_name(self):
         return self.get_username()
@@ -84,14 +80,3 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 class Speaker(models.Model):  # one to many
     speaker = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
-
-
-class Message(models.Model):  # one to many
-    sender = models.ForeignKey(MyUser, on_delete=models.DO_NOTHING, related_name='sender')
-    recipient = models.ForeignKey(MyUser, on_delete=models.DO_NOTHING, related_name='recipient')
-    conference = models.ForeignKey(Conference, on_delete=models.DO_NOTHING)
-    content = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.content

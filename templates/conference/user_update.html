@@ -1,9 +1,12 @@
-<h1>Update profile</h1>
+{% extends "base.html" %}
+{% block title %}User update{% endblock %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+    <h1>Update profile</h1>
 
-<form action="{% url 'conference:update_profile' pk=user.id %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="update" />
-</form>
+    <form action="{% url 'conference:user_update' pk=user.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="update" />
+    </form>
+{% endblock %}

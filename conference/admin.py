@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from conference.forms import UserChangeForm, UserCreationForm
-from conference.models import MyUser, Conference, Speaker, Message
+from conference.models import MyUser, Conference, Speaker
 
 
 @admin.register(MyUser)
@@ -10,7 +10,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('username', 'name', 'image', 'company', 'created', 'is_admin')
+    list_display = ('username', 'name', 'image', 'representative', 'created', 'is_admin')
     list_filter = ('is_admin', )
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -35,8 +35,3 @@ class SpeakerAdmin(admin.ModelAdmin):
 @admin.register(Conference)
 class ConferenceAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'start_date', 'end_date')
-
-
-@admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ('sender', 'recipient', 'conference', 'content', 'created')

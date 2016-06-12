@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ChatApp">
+<head>
+    {% block head %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Blog {% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+    {% load staticfiles %}
+    {% load static swampdragon_tags %}
+
+    <!-- AngularJS -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+
+    {% swampdragon_settings %}
+    <script type="text/javascript" src="{% static 'swampdragon/js/dist/swampdragon.min.js' %}"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/dist/datamapper.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/angular/services.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/legacy/swampdragon-vanilla.js"></script>
+
+    <!-- app -->
+    <script type="text/javascript" src="{{ STATIC_URL }}app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}controllers.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}notifications.js"></script>
+
+
+    <div id="menu">
+        {% block menu %}
+            <p>
+                <a href="/conference/">conferences</a>
+                <a href="/conference/archieve/">archieve</a>
+                <a href="/blog/">blog</a>
+                <a href="/chat/">chat</a>
+                <a href="/conference/profile/">profile</a>
+                <a href="/conference/login_page/">login</a>
+                <a href="/conference/logout_page/">logout</a>
+            </p>
+        {% endblock %}</div>
+    <div id="content">
+        {% block content %}
+        {% block paginator %}{% endblock %}
+        {% endblock %}
+    </div>
+</body>
+</html>

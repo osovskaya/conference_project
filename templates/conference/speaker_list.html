@@ -1,12 +1,17 @@
-<h2>Conference "{{conference.name}}"</h2>
-<p>List of speakers</p>
+{% extends "base.html" %}
+{% block title %}Speakers{% endblock %}
 
-{% if speaker_list %}
-    <ul>
-    {% for speaker in speaker_list %}
-        <li>{{ speaker.speaker.name }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No speakers are available.</p>
-{% endif %}
+{% block content %}
+    <h2>Conference "{{conference.name}}"</h2>
+    <p>List of speakers</p>
+
+    {% if speaker_list %}
+        <ul>
+        {% for speaker in speaker_list %}
+            <li>{{ speaker.speaker.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No speakers are available.</p>
+    {% endif %}
+{% endblock %}

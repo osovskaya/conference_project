@@ -1,27 +1,31 @@
-<h2>Conference details</h2>
-<br>
+{% extends "base.html" %}
+{% block title %}Conference detail{% endblock %}
 
-{% if conference %}
+{% block content %}
+    <h2>Conference details</h2>
+    <br>
 
-<h2>{{ conference.name }}</h2>
-<br>
-<p>Starts at: {{ conference.start_date }}</p>
-<p>Ends at: {{ conference.end_date }}</p>
-<p><a href="{% url 'conference:sponsor_list' pk=conference.id%}">Sponsors</a></p>
-<p><a href="{% url 'conference:speaker_list' pk=conference.id%}">Speakers</a></p>
-<br>
-<p>{{ conference.description }}</p>
-{% else %}
-    <p>Conference is not available</p>
-{% endif %}
+    {% if conference %}
 
-<br>
-<h2>Comments</h2>
-{% if message_list %}
-    {% for message in message_list %}
-        <p>{{ message.sender }}</p>
-        <p>{{ message.content }}</p>
-    {% endfor %}
-{% else %}
-    <p>No comments to this conference.</p>
-{% endif %}
+        <h2>{{ conference.name }}</h2>
+        <br>
+        <p>Starts at: {{ conference.start_date }}</p>
+        <p>Ends at: {{ conference.end_date }}</p>
+        <p><a href="{% url 'conference:sponsor_list' pk=conference.id%}">Sponsors</a></p>
+        <p><a href="{% url 'conference:speaker_list' pk=conference.id%}">Speakers</a></p>
+        <br>
+        <p>{{ conference.description }}</p>
+    {% else %}
+            <p>Conference is not available</p>
+    {% endif %}
+
+    <br>
+    <h2>Listeners</h2>
+    {% if listener_list %}
+        {% for listener in listener_list %}
+            <p>{{ listener }}</p>
+        {% endfor %}
+    {% else %}
+        <p>List of listeners is not available now.</p>
+    {% endif %}
+{% endblock %}

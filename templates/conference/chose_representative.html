@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}User update{% endblock %}
+
+{% block content %}
+    <h1>Chose representative</h1>
+
+    <form action="{% url 'conference:chose_representative' pk=user.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="add" />
+    </form>
+{% endblock %}

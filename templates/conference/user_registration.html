@@ -1,7 +1,5 @@
 <h1>Registration page</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
 <form action="{% url 'conference:registration' %}" method="post">
 {% csrf_token %}
 {{ form.as_p }}
