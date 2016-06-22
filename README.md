@@ -7,5 +7,5 @@ Project is divided into three parts:
 - conference (main part which represent list of conferences available and archieved, 
 list of sponsors, speakers, listeners to each conference, personal page and settings of listeners and companies)
 
-Project is written using Python 2.7, Django 1.8, for database PostgresSQL is used.
-To make chat more interactivae and real time web sockets are used (SwampDragon).
+Project is written using Python 2.7, Django 1.8, PostgresSQL.
+To make chat more interactive and real time web sockets are used (SwampDragon).
